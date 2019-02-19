@@ -15,6 +15,5 @@ extern lexeme *getVal(lexeme *env, lexeme *k);
 extern lexeme *updateVal(lexeme *env, lexeme *k, lexeme *v);
 extern void displayLocalEnv(lexeme *env);
 extern void displayAllEnv(lexeme *env);
-extern lexeme *car(lexeme *tree);
-extern lexeme *cdr(lexeme *tree);
+
 #endif

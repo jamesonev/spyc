@@ -80,18 +80,6 @@ void displayAllEnv(lexeme *env){
     }
 }
 
-lexeme *car(lexeme *tree){
-    if(!tree){      //avoids segfault from accessing null->car
-        return NULL;
-    }
-    return tree->car;
-}
-lexeme *cdr(lexeme *tree){
-    if(!tree){      //avoids segfault from accessing null->car
-        return NULL;
-    }
-    return tree->cdr;
-}
 /*
 //THIS PART IS EVALUATING
 //all eval calls return lexeme

@@ -125,3 +125,16 @@ void printLexeme(lexeme *item, FILE *fp){
     else                                fprintf(fp, "\n");
     //fprintf(fp, "\t\torigin: %d\n", item->lineNo);
 }
+
+lexeme *car(lexeme *tree){
+    if(!tree){      //avoids segfault from accessing null->car
+        return NULL;
+    }
+    return tree->car;
+}
+lexeme *cdr(lexeme *tree){
+    if(!tree){      //avoids segfault from accessing null->car
+        return NULL;
+    }
+    return tree->cdr;
+}

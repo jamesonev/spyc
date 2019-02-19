@@ -83,4 +83,6 @@ extern struct lexeme *cons(enum lexTypes type, lexeme *car, lexeme *cdr);
 extern void deleteLexeme(lexeme *item);
 extern void printLexeme(lexeme *item, FILE *fp);
 extern void printType(enum lexTypes type, FILE *fp);
+extern lexeme *car(lexeme *tree);
+extern lexeme *cdr(lexeme *tree);
 #endif
