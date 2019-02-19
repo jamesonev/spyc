@@ -9,11 +9,26 @@ for CS403, spring 2019
 
 void eval(lexeme* tree, lexeme* env){
     switch(tree->type){
-        case WHILE:
+        case STATEMENTS:
+            eval(tree->car, env);
+            break;
+        case STATEMENT:
+            eval(tree->car, env);
+            break;
+        case PLUS:
+            printf("found plus\n");
+            printf("%d\n", tree->car->intVal + tree->cdr->intVal);
+            /*printLexeme(tree, stdout);
+            if(tree->car) printLexeme(tree->car, stdout);
+            else printf("no car\n");
+            
+            if(tree->cdr) printLexeme(tree->cdr, stdout);
+            else printf("no cdr\n");*/
+            return; //cons(INTEGER, tree->c)
             break;
         default:
-            printf("unhandled statement in eval: \n");
+            printf("unhandled statement in emval: \n");
             printLexeme(tree, stdout);
-            exit(-3);
+            //exit(-3);
     }
 }

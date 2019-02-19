@@ -93,7 +93,7 @@ void printType(enum lexTypes type, FILE *fp){
         "EXPRESSION",
         "EXPRLIST",
         "OPTEXPRLIST",
-        "ENVIRONMENT",
+        "ENV",
         "CLOSURE",
         "TABLE",
         "IDLIST",
