@@ -8,9 +8,6 @@ all: environment
 lexeme.o: lexeme.c lexeme.h
 	gcc $(OOPTS) lexeme.c
 
-env.o: env.c env.h
-	gcc $(OOPTS) env.c
-
 control.o: control.c lexeme.h
 	gcc $(OOPTS) control.c
 

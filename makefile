@@ -5,6 +5,21 @@ LOPTS = -Wall -Wextra -g -std=c99
 
 all: pp
 
+control.o: control.c lexer.h
+	gcc $(OOPTS) control.c
+
+custString.o: custString.c custString.h
+	gcc $(OOPTS) custString.c
+
+digit.o: digit.c digit.h
+	gcc $(OOPTS) digit.c
+
+env.o: env.c env.h
+	gcc $(OOPTS) env.c
+
+eval.o: eval.c eval.h
+	gcc $(OOPTS) eval.c
+
 lexeme.o: lexeme.c lexeme.h
 	gcc $(OOPTS) lexeme.c
 
@@ -14,20 +29,9 @@ lexer.o: lexer.c lexer.h
 printer.o: printer.c printer.h
 	gcc $(OOPTS) printer.c
 
-custString.o: custString.c custString.h
-	gcc $(OOPTS) custString.c
-
-digit.o: digit.c digit.h
-	gcc $(OOPTS) digit.c
-
 recognizer.o: recognizer.c recognizer.h
 	gcc $(OOPTS) recognizer.c
 
-eval.o: eval.c eval.h
-	gcc $(OOPTS) eval.c
-
-control.o: control.c lexer.h
-	gcc $(OOPTS) control.c
 
 pp: control.o lexeme.o lexer.o printer.o digit.o recognizer.o eval.o custString.o
 	gcc $(LOPTS) control.o lexeme.o lexer.o printer.o digit.o recognizer.o eval.o custString.o -o pp
