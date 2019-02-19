@@ -9,7 +9,7 @@ for CS403, spring 2019
 
 void eval(lexeme* tree){
     switch(tree->type){
-        case PRINT:
+        case WHILE:
             break;
         default:
             printf("unhandled statement in eval: \n");
