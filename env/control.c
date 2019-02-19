@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h> //for exit
-#include "lexeme.h"
+#include "../lexeme.h"
 #include "env.h"
 
 lexeme *current;

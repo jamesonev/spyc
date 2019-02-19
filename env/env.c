@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "lexeme.h"
+#include "../lexeme.h"
 #include "env.h"
 
 //2 linked lists, 1 w var names, 1 with var values
@@ -15,6 +15,10 @@ lexeme *newEnv(){
     lexeme *item = newLexeme(ENVIRONMENT, 0, NULL, 0);
     item->car = newLexeme(TABLE, 0, NULL, 0);
     return item;
+}
+lexeme *init(lexeme* env){
+    //TODO: seed top level env with builtin functions
+    return env;
 }
 
 lexeme *copyTable(lexeme *k, lexeme *v, lexeme *destEnv){
@@ -86,7 +90,6 @@ void displayAllEnv(lexeme *env){
 //cons returns new lexeme
 evalFuncDef(tree, env){
     insertEnv(env, tree->car), cons(CLOSURE, env, tree));
-
 }
 
 eval(tree, env){

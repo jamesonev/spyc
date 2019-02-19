@@ -5,14 +5,14 @@ LOPTS = -Wall -Wextra -g -std=c99
 
 all: environment
 
-lexeme.o: lexeme.c lexeme.h
-	gcc $(OOPTS) lexeme.c
+lexeme.o: ../lexeme.c ../lexeme.h
+	gcc $(OOPTS) ../lexeme.c
 
-control.o: control.c lexeme.h
+control.o: control.c ../lexeme.h
 	gcc $(OOPTS) control.c
 
-custString.o: custString.c custString.h
-	gcc $(OOPTS) custString.c
+custString.o: ../custString.c ../custString.h
+	gcc $(OOPTS) ../custString.c
 
 environment: control.o lexeme.o  env.o custString.o
 	gcc $(LOPTS) control.o lexeme.o env.o custString.o -o environment
