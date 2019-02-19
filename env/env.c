@@ -12,75 +12,80 @@
 //lexeme with car(Table), cdr(NULL)
 
 lexeme *newEnv(){
-    lexeme *item = newLexeme(ENVIRONMENT, 0, NULL, 0);
-    item->car = newLexeme(TABLE, 0, NULL, 0);
-    return item;
+    return cons(ENV, NULL, cons(ENV, NULL, NULL));
 }
 lexeme *init(lexeme* env){
     //TODO: seed top level env with builtin functions
     return env;
 }
 
-lexeme *copyTable(lexeme *k, lexeme *v, lexeme *destEnv){
-    if(k->car) copyTable(car(k), cdr(v), destEnv);
-    return insertEnv(destEnv, k, v);
-}
-
-lexeme *extend(lexeme *callingEnv){
-    lexeme *item = newEnv();
-    copyTable(car(car(callingEnv)), cdr(car(callingEnv)), item);
-    callingEnv->cdr = item;
-    return item;
+lexeme *extend(lexeme *env, lexeme* k, lexeme* v){
+    return cons(ENV, k, cons(ENV, v, env));
 }
 
 lexeme *insertEnv(lexeme *env, lexeme *k, lexeme *v){
-    k->car = car(car(env));
-    v->cdr = cdr(car(env));
-    env->car->car = k;
-    env->car->cdr = v;
+    //insert k at top of top list
+    k->car =car(env);
+    env->car = k;
+    //move on to v
+    env = cdr(env);
+    v->car = car(env);
+    env->car = v;
     return v;
 }
 lexeme *getVal(lexeme *env, lexeme *k){
-    lexeme *key = car(car(env));
-    lexeme *value = cdr(car(env));
-    while(key){
-        if (!strcmp(k->stringVal, key->stringVal)) break;
-        key = car(key);
-        value = cdr(value);
+    lexeme *key;
+    lexeme *value;
+    while(env){
+        key = car(env);
+        value = car(cdr(env));
+        while(key){
+            if (!strcmp(k->stringVal, key->stringVal)) return value;
+            key = car(key);
+            value = car(value);
+        }
+        env = cdr(cdr(env));
     }
-    return value;
+    printf("ERROR: attempt to get a nonexistant ID\n");
+    exit(-1);
+    return NULL;
 }
 lexeme *updateVal(lexeme *env, lexeme *k, lexeme *v){
-    lexeme *key = car(car(env));
-    lexeme *value = car(env);
-    while(key){
-        if (!strcmp(k->stringVal, key->stringVal)){
-            v->cdr = cdr(cdr(value));
-            value->cdr = v;
-            return v;
+    lexeme *key;
+    lexeme *vPtr;   //points to the lexeme in front of the correct value
+    while(env){
+        key = car(env);
+        vPtr = cdr(env);
+        while(key){
+            if(!strcmp(k->stringVal, key->stringVal)){
+                v->car = car(vPtr);
+                vPtr->car = v;
+                return v;
+            }
+            key = car(key);
+            vPtr = car(vPtr);
         }
-        key = car(key);
-        value = cdr(value);
+        env = cdr(cdr(env));
     }
-    printf("ERROR: attempt to update an unknown ID\n");
+    printf("ERROR: attempt to update an undefined ID\n");
     exit(-1);
+    return NULL;
 }
 void displayLocalEnv(lexeme *env){
     fprintf(stdout, "-----------ENVIRONMENT----------\n");
-    lexeme *k = car(car(env)); //table
-    lexeme *v = cdr(car(env));  //first v in table
+    lexeme *k = car(env);       //table
+    lexeme *v = car(cdr(env));  //first v in table
     while(k){
         printLexeme(k, stdout);
         printLexeme(v, stdout);
         k = car(k);
-        v = cdr(v);
+        v = car(v);
     }
 }
 void displayAllEnv(lexeme *env){
-    lexeme *current = env;
-    while(current){
-        displayLocalEnv(current);
-        current = cdr(current);
+    while(env){
+        displayLocalEnv(env);
+        env = cdr(cdr(env));
     }
 }
 
@@ -102,13 +107,4 @@ eval(tree, env){
     if(tree->type == FUNCTIONDEF){
         return evalFuncDef(tree, env);
     }
-}
-
-
-int main(int argc, char const *argv[])
-{
-    env = newEnv()
-    tree = parse(fp)
-    eval(tree, env);
-    return 0;
 }*/
