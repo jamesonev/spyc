@@ -14,8 +14,8 @@ custString.o: custString.c custString.h
 digit.o: digit.c digit.h
 	gcc $(OOPTS) digit.c
 
-env.o: env.c env.h
-	gcc $(OOPTS) env.c
+env.o: env/env.c env/env.h
+	gcc $(OOPTS) env/env.c
 
 eval.o: eval.c eval.h
 	gcc $(OOPTS) eval.c
@@ -32,9 +32,8 @@ printer.o: printer.c printer.h
 recognizer.o: recognizer.c recognizer.h
 	gcc $(OOPTS) recognizer.c
 
-
-pp: control.o lexeme.o lexer.o printer.o digit.o recognizer.o eval.o custString.o
-	gcc $(LOPTS) control.o lexeme.o lexer.o printer.o digit.o recognizer.o eval.o custString.o -o pp
+pp: control.o lexeme.o lexer.o printer.o digit.o recognizer.o env.o eval.o custString.o
+	gcc $(LOPTS) control.o lexeme.o lexer.o printer.o digit.o recognizer.o env.o eval.o custString.o -o pp
 
 run:
 	./pp tests/test1.spc 

@@ -4,6 +4,7 @@
 #include "lexeme.h"
 #include "recognizer.h"
 #include "printer.h"
+#include "env/env.h"
 #include "eval.h"
 
 lexeme *current;
@@ -11,7 +12,7 @@ FILE *fp;
 
 int main(int argc, char const *argv[])
 {
-    (void)argc;     //remove compile warning
+    (void)argc;     //removec compile warning
     fp       = fopen(argv[1], "r");
     if(!fp){
         fprintf(stdout, "ERROR: failed to open file %s\n", argv[1]);
@@ -36,6 +37,7 @@ int main(int argc, char const *argv[])
         return 0;
     }
     lexeme *prog = program();
+    lexeme *env = newEnv();
     eval(prog);
     return 0;
 }
