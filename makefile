@@ -1,7 +1,7 @@
 OOPTS = -Wall -Wextra -g -std=c99 -c
 LOPTS = -Wall -Wextra -g -std=c99
 
-.PHONY: run test1 test2 test3 test4 test5
+.PHONY: run test1 t1p test2 test3 test4 test5
 
 all: pp
 
@@ -39,6 +39,9 @@ run:
 
 test1:
 	./pp test1.spc
+
+t1p:
+	./pp test1.spc -pp
 
 test2:
 	./pp test2.spc

@@ -27,8 +27,15 @@ int main(int argc, char const *argv[])
         fclose(fp);
         return 0;
     }
+    if(argv[2] && !strcmp(argv[2], "-pp")){
+        while(!feof(fp)){
+            lexeme *prog = program();
+            pp(prog);
+        }
+        fclose(fp);
+        return 0;
+    }
     lexeme *prog = program();
-    pp(prog);
-    //eval(prog);
+    eval(prog);
     return 0;
 }
