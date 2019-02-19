@@ -38,6 +38,6 @@ int main(int argc, char const *argv[])
     }
     lexeme *prog = program();
     lexeme *env = newEnv();
-    eval(prog);
+    eval(prog, env);
     return 0;
 }

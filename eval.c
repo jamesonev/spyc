@@ -7,7 +7,7 @@ for CS403, spring 2019
 #include "lexeme.h"
 #include "eval.h"
 
-void eval(lexeme* tree){
+void eval(lexeme* tree, lexeme* env){
     switch(tree->type){
         case WHILE:
             break;
