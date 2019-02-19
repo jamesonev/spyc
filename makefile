@@ -37,21 +37,21 @@ pp: control.o lexeme.o lexer.o printer.o digit.o recognizer.o eval.o custString.
 	gcc $(LOPTS) control.o lexeme.o lexer.o printer.o digit.o recognizer.o eval.o custString.o -o pp
 
 run:
-	./pp test1.spc 
-	./pp test2.spc
-	./pp test3.spc
+	./pp tests/test1.spc 
+	./pp tests/test2.spc
+	./pp tests/test3.spc
 
 test1:
-	./pp test1.spc
+	./pp tests/test1.spc
 
 t1p:
-	./pp test1.spc -pp
+	./pp tests/test1.spc -pp
 
 test2:
-	./pp test2.spc
+	./pp tests/test2.spc
 
 test3:
-	./pp test3.spc
+	./pp tests/test3.spc
 
 
 clean:
