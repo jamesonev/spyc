@@ -12,6 +12,7 @@ lexeme* ifStatement();
 lexeme* block();
 int blockPending();
 lexeme* optExpressionList();
+lexeme* expressionList();
 lexeme* expression();
 int ifPending();
 int statementPending();
@@ -55,27 +56,34 @@ int varExpressionPending(){
 }
 lexeme* varExpression(){
     lexeme* i;
-    lexeme* o;
+    lexeme* e;
     i = match(ID);
     if(check(OPAREN)){
         match(OPAREN);
-        o = optExpressionList();
+        e = optExpressionList();
         match(CPAREN);
-        return cons(FUNCCALL, i, o);
+        return cons(FUNCCALL, i, e);
+    }
+    else if(check(OBRACKET)){
+        match(OBRACKET);
+        e = expressionList();
+        match(CBRACKET);
+        return cons(ARRAY, i, e);
     }
     return i;
 }
+
 int unaryPending(){
     return check(REAL) || check(INTEGER) || check(STRING) ||
             check(OBJDEF) || varExpressionPending();
 }
 lexeme* unary(){
     lexeme* item = NULL;
-    if(check(REAL))                     item = match(REAL);
-    else if(check(INTEGER))             item = match(INTEGER);
-    else if(check(STRING))              item = match(STRING);
-    else if(check(OBJDEF))              item = match(OBJDEF);
-    else if(varExpressionPending())     item = varExpression();
+    if      (check(REAL))                item = match(REAL);
+    else if (check(INTEGER))             item = match(INTEGER);
+    else if (check(STRING))              item = match(STRING);
+    else if (check(OBJDEF))              item = match(OBJDEF);
+    else if (varExpressionPending())     item = varExpression();
     else {
         printf("found: ");
         printLexeme(current, stdout);
@@ -197,22 +205,6 @@ lexeme* whileStatement(){
 int objectDefPending(){
     return check(OBJDEF);
 }
-/*lexeme* objectDef(){
-    printf("made it this far\n");
-    lexeme* i = NULL;
-    lexeme* e;
-    printf("made it this far\n");
-    match(STRUCT);
-    printf("made it this far\n");
-    i = match(ID);
-    //printType(i->type, stdout);
-    //printLexeme(i, stdout);
-    printf("made it this far\n");
-    match(OBRACE);
-    e = expressionList();
-    match(CBRACE);
-    return cons(STRUCT, i, e);
-}*/
 lexeme* objectDef(){
     lexeme* i;
     lexeme* e;
@@ -263,17 +255,6 @@ lexeme* defList(){
     if (defPending())   l = defList();
     return cons(DEFLIST, d, l);
 }
-int printPending(){
-    return check(PRINT);
-}
-lexeme* printCall(){
-    lexeme* e;
-    match(PRINT);
-    match(OPAREN);
-    e = expressionList();
-    match(CPAREN);
-    return cons(PRINT, e, NULL);
-}
 
 int returnPending(){
     return check(RETURN);
@@ -291,8 +272,7 @@ int statementPending(){
 }
 lexeme* statement(){
     lexeme* item = NULL;
-    if      (printPending())            item = printCall();
-    else if (defPending())              item = defList();
+    if      (defPending())              item = defList();
     else if (ifPending())               item = ifStatement();
     else if (whilePending())            item = whileStatement();
     else if (returnPending())           item = returnStatement();

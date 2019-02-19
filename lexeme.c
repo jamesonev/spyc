@@ -89,6 +89,7 @@ void printType(enum lexTypes type, FILE *fp){
         "FUNCCALL",
         "FUNCDEF",
         "OBJDEF",
+        "ARRAY",
         "EXPRESSION",
         "EXPRLIST",
         "OPTEXPRLIST",
@@ -98,7 +99,6 @@ void printType(enum lexTypes type, FILE *fp){
         "IDLIST",
         "GLUE",
         "IFGLUE",
-        "PRINT",
         //SPECIAL CHARS
         "OBRACE",
         "CBRACE",

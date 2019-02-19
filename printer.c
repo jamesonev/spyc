@@ -115,11 +115,6 @@ void pp(lexeme* tree){
             pp(tree->car);
             if(tree->cdr)   pp(tree->cdr);
             break;
-        case PRINT:
-            printf("print(");
-            if(tree->car) pp(tree->car);
-            printf(")\n");
-            break;
         case RETURN:
             printf("return ");
             if(tree->car) pp(tree->car);
@@ -159,6 +154,12 @@ void pp(lexeme* tree){
             pp(tree->car);  //calls 'OPTEXPRLIST'
             printf(")\n");
             pp(tree->cdr);  //calls BLOCK
+            break;
+        case ARRAY:
+            pp(tree->car);  //id
+            printf("[");
+            pp(tree->cdr);  //exprlist
+            printf("]\n");
             break;
 //comparisons
         case GREATER_THAN:

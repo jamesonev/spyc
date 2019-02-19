@@ -41,6 +41,7 @@ enum lexTypes   //ALSO UPDATE PRINTLEXEME() IN LEXEME.C
     FUNCCALL,
     FUNCDEF,
     OBJDEF,
+    ARRAY,
     EXPRESSION,
     EXPRLIST,
     OPTEXPRLIST,
@@ -50,7 +51,6 @@ enum lexTypes   //ALSO UPDATE PRINTLEXEME() IN LEXEME.C
     IDLIST,
     GLUE,
     IFGLUE,
-    PRINT,
     //SPECIAL CHARS
     OBRACE,
     CBRACE,
