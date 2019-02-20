@@ -7,28 +7,51 @@ for CS403, spring 2019
 #include "lexeme.h"
 #include "eval.h"
 
-void eval(lexeme* tree, lexeme* env){
+lexeme* evalPlus(lexeme* tree, lexeme* env){
+    lexeme* lhs = eval(tree->car, env);
+    lexeme* rhs = eval(tree->cdr, env);
+    if(lhs->type == INTEGER) {
+
+        if(rhs->type == INTEGER)
+            return newLexeme(INTEGER, lhs->intVal + rhs->intVal, NULL, 0);
+        else if(rhs->type == REAL)
+            return newLexeme(REAL, 0, NULL, (double)lhs->intVal + rhs->realNumVal);
+        
+    }
+    else if(lhs->type == REAL){
+
+        if(rhs->type == REAL)
+            return newLexeme(REAL, 0, NULL, lhs->realNumVal + rhs->realNumVal);
+        else if(rhs->type == INTEGER)
+            return newLexeme(REAL, 0, NULL, lhs->realNumVal + (double)rhs->intVal);
+
+    }
+    printf("called PLUS with illegal args: \n");
+    printLexeme(lhs, stdout);
+    printLexeme(rhs, stdout);
+    exit(-3);
+    return NULL;
+}
+
+lexeme* eval(lexeme* tree, lexeme* env){
     switch(tree->type){
         case STATEMENTS:
-            eval(tree->car, env);
-            break;
+            return eval(tree->car, env);
         case STATEMENT:
-            eval(tree->car, env);
-            break;
+            return eval(tree->car, env);
+//unary
+        case INTEGER:
+            return tree;
+        case REAL:
+            return tree;
+        case STRING:
+            return tree;
+//operators
         case PLUS:
-            printf("found plus\n");
-            printf("%d\n", tree->car->intVal + tree->cdr->intVal);
-            /*printLexeme(tree, stdout);
-            if(tree->car) printLexeme(tree->car, stdout);
-            else printf("no car\n");
-            
-            if(tree->cdr) printLexeme(tree->cdr, stdout);
-            else printf("no cdr\n");*/
-            return; //cons(INTEGER, tree->c)
-            break;
+            return evalPlus(tree, env);
         default:
             printf("unhandled statement in emval: \n");
             printLexeme(tree, stdout);
-            //exit(-3);
+            exit(-3);
     }
 }

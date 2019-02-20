@@ -8,6 +8,6 @@ for CS403, spring 2019
 #ifndef __EVAL_INCLUDED__
 #define __EVAL_INCLUDED__
 
-extern void eval(lexeme* tree, lexeme* env);
+extern lexeme* eval(lexeme* tree, lexeme* env);
 
 #endif
