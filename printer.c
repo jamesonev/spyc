@@ -135,8 +135,8 @@ void pp(lexeme* tree){
             }
             break;
         case OPTEXPRLIST:
-            if(tree->cdr){
-                pp(tree->cdr);      //call exprlist
+            if(tree->car){
+                pp(tree->car);      //call exprlist
             }
             break;
         case FUNCCALL:

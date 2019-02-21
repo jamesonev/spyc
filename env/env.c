@@ -19,6 +19,16 @@ lexeme *init(lexeme* env){
     return env;
 }
 
+//private
+lexeme* extendHelper(lexeme *env, lexeme* k, lexeme* v){
+    while(k){
+        k = cdr(k);
+    }
+    insert(env, car(k), car(v) );
+    k = NULL;
+    return k; 
+}
+
 lexeme *extend(lexeme *env, lexeme* k, lexeme* v){
     return cons(ENV, k, cons(ENV, v, env));
 }

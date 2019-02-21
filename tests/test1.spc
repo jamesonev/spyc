@@ -23,7 +23,7 @@ struct foo{
 
 a = 2
 c = 4
-func foo(a){
-    a = a + 2
+func foo(x){
+    x = 7
 }
-foo(a)
+a = foo(a)

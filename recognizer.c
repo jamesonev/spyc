@@ -154,7 +154,7 @@ lexeme* expressionList(){
 lexeme* optExpressionList(){
     lexeme* e = NULL;
     if(expressionPending()) e = expressionList();
-    return cons(OPTEXPRLIST, NULL, e);
+    return cons(OPTEXPRLIST, e, NULL);
 }
 
 int elsePending(){
@@ -280,7 +280,7 @@ lexeme* statement(){
     else{
         printf("found: ");
         printLexeme(current, stdout);
-        printf("expected: ");
+        printf("expected: "); 
         printType(type, stdout);
         printf("\n");
         damn("illegal");

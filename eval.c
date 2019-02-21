@@ -67,17 +67,17 @@ lexeme* evalStruct(lexeme* tree, lexeme* env){
 }
 
 lexeme* evalFuncCall(lexeme* tree, lexeme* env){
-    lexeme* clos = lookup(env,car(tree) );
-    lexeme* args = cdr(tree);
-    lexeme* params = car(cdr(cdr(clos)));
-    printLexeme(params, stdout);
+    lexeme* clos = eval(car(tree), env );   //looks up func def
+    lexeme* args = eval(cdr(tree), env);    //evaluates optexprlist of args
+    lexeme* params = car(cdr(cdr(clos)));   
+    //printLexeme(params, stdout);
     lexeme* body = cdr(cdr(cdr(clos)));
-    printLexeme(body, stdout);
+    //printLexeme(body, stdout);
     lexeme* defenv = car(clos);
     //displayLocalEnv(defenv);
     lexeme* evalargs = eval(args, env);
     lexeme* newenv = extend(defenv, params, evalargs);
-    //displayLocalEnv(newenv);
+    displayLocalEnv(newenv);
     return eval(body, newenv);
 }
 
@@ -112,7 +112,7 @@ lexeme* eval(lexeme* tree, lexeme* env){
             return NULL;
         case EXPRLIST:
             l = eval(tree->car, env);   //returns eval'd expr
-            if(tree->cdr) return cons(EXPRLIST, l, eval(tree->cdr, env) );
+            if(tree->cdr) return cons(EVALDARGS, l, eval(tree->cdr, env) );
             return l;
         case STATEMENTS:
             l = eval(tree->car, env);
@@ -126,9 +126,10 @@ lexeme* eval(lexeme* tree, lexeme* env){
             return l;
 //funcs/objs
         case FUNCDEF:
-            return insert(env, car(tree), cons(CLOSURE, env, cdr(tree)) );
+            return insert(env, car(tree), cons(CLOSURE, env, tree) );
         case FUNCCALL:
             return evalFuncCall(tree, env);
+        case CLOSURE:       return tree;
         case GLUE:          return tree;
         case OBJDEF:        return evalStruct(tree, env);
 //conditionals

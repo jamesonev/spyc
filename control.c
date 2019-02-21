@@ -31,7 +31,6 @@ int main(int argc, char const *argv[])
     lexeme *prog = program();
     if(argv[2] && !strcmp(argv[2], "-pp")){
         pp(prog);
-        
         return 0;
     }
     
@@ -40,7 +39,7 @@ int main(int argc, char const *argv[])
     //printf("success\n");
     ///displayAllEnv(env);
     printLexeme(prog, stdout);
-    //displayAllEnv(env);
+    displayAllEnv(env);
     fclose(fp);
     return 0;
 }
