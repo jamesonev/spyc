@@ -40,6 +40,7 @@ int main(int argc, char const *argv[])
     //printf("success\n");
     ///displayAllEnv(env);
     printLexeme(prog, stdout);
+    //displayAllEnv(env);
     fclose(fp);
     return 0;
 }

@@ -66,6 +66,21 @@ lexeme* evalStruct(lexeme* tree, lexeme* env){
     return insert(env, car(tree), cdr(tree) );
 }
 
+lexeme* evalFuncCall(lexeme* tree, lexeme* env){
+    lexeme* clos = lookup(env,car(tree) );
+    lexeme* args = cdr(tree);
+    lexeme* params = car(cdr(cdr(clos)));
+    printLexeme(params, stdout);
+    lexeme* body = cdr(cdr(cdr(clos)));
+    printLexeme(body, stdout);
+    lexeme* defenv = car(clos);
+    //displayLocalEnv(defenv);
+    lexeme* evalargs = eval(args, env);
+    lexeme* newenv = extend(defenv, params, evalargs);
+    //displayLocalEnv(newenv);
+    return eval(body, newenv);
+}
+
 lexeme* eval(lexeme* tree, lexeme* env){
     if(!tree)   return tree;
     lexeme* l = NULL;
@@ -91,6 +106,14 @@ lexeme* eval(lexeme* tree, lexeme* env){
         case MULTIPLY:      return evalMultiply(tree, env);
         case ASSIGN:        return insert(env, car(tree), eval(cdr(tree),env) );
 //sets of statements
+        case OPTEXPRLIST:
+            if(cdr(tree))
+                return eval(cdr(tree), env);
+            return NULL;
+        case EXPRLIST:
+            l = eval(tree->car, env);   //returns eval'd expr
+            if(tree->cdr) return cons(EXPRLIST, l, eval(tree->cdr, env) );
+            return l;
         case STATEMENTS:
             l = eval(tree->car, env);
             if(tree->cdr) l = eval(tree->cdr, env);
@@ -101,8 +124,11 @@ lexeme* eval(lexeme* tree, lexeme* env){
             l = eval(tree->car, env);
             if(tree->cdr) l = eval(tree->cdr, env);
             return l;
+//funcs/objs
         case FUNCDEF:
             return insert(env, car(tree), cons(CLOSURE, env, cdr(tree)) );
+        case FUNCCALL:
+            return evalFuncCall(tree, env);
         case GLUE:          return tree;
         case OBJDEF:        return evalStruct(tree, env);
 //conditionals

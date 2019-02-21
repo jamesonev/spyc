@@ -117,7 +117,7 @@ void printType(enum lexTypes type, FILE *fp){
     fprintf(fp, "%s ", printLexTypes[type]);
 }
 void printLexeme(lexeme *item, FILE *fp){
-    
+    if(!item) return;
     printType(item->type, fp);
     if      (item->type == INTEGER)     fprintf(fp, "%d\n", item->intVal);
     else if (item->stringVal)           fprintf(fp, "%s\n", item->stringVal);
