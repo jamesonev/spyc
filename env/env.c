@@ -23,7 +23,7 @@ lexeme *extend(lexeme *env, lexeme* k, lexeme* v){
     return cons(ENV, k, cons(ENV, v, env));
 }
 
-lexeme *insertEnv(lexeme *env, lexeme *k, lexeme *v){
+lexeme *insert(lexeme *env, lexeme *k, lexeme *v){
     //insert k at top of top list
     k->car =car(env);
     env->car = k;
@@ -33,7 +33,7 @@ lexeme *insertEnv(lexeme *env, lexeme *k, lexeme *v){
     env->car = v;
     return v;
 }
-lexeme *getVal(lexeme *env, lexeme *k){
+lexeme *lookup(lexeme *env, lexeme *k){
     lexeme *key;
     lexeme *value;
     while(env){
@@ -47,10 +47,11 @@ lexeme *getVal(lexeme *env, lexeme *k){
         env = cdr(cdr(env));
     }
     printf("ERROR: attempt to get a nonexistant ID\n");
+    printLexeme(k, stdout);
     exit(-1);
     return NULL;
 }
-lexeme *updateVal(lexeme *env, lexeme *k, lexeme *v){
+lexeme *update(lexeme *env, lexeme *k, lexeme *v){
     lexeme *key;
     lexeme *vPtr;   //points to the lexeme in front of the correct value
     while(env){

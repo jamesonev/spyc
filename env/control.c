@@ -15,14 +15,14 @@ int main(int argc, char const *argv[])
     lexeme *env = newEnv();
     current = k = newLexeme(ID, 0, "x", 0);
     v = newLexeme(STRING, 5, "mammamia", 0);
-    insertEnv(env, k, v);
+    insert(env, k, v);
     k = newLexeme(ID, 0, "y", 0);
     v = newLexeme(INTEGER, 12, NULL, 0);
-    insertEnv(env, k, v);
+    insert(env, k, v);
     k = newLexeme(ID, 0, "z", 0);
     v = newLexeme(INTEGER, 35, NULL, 0);
     lexeme *env2 = extend(env,k,v);
-    printLexeme(getVal(env2, current), stdout);
+    printLexeme(lookup(env2, current), stdout);
     //updateVal(env2, current, newLexeme(INTEGER, 1000, NULL, 0));
     //printLexeme(getVal(env, current), stdout);
     printf("displaying environments\n");

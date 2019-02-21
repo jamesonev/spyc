@@ -40,6 +40,7 @@ void pp(lexeme* tree){
             break;
 //operators
         case ASSIGN:
+            printf("in pp.ASSIGN\n");
             pp(tree->car);
             printf("= ");
             pp(tree->cdr);
@@ -145,7 +146,7 @@ void pp(lexeme* tree){
             printf(")\n");
             break;
         case FUNCDEF:
-            printf("function \n");
+            printf("funcdef \n");
             pp(tree->car);  //calls id
             pp(tree->cdr);   //calls 'GLUE'
             break;

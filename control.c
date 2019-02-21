@@ -28,16 +28,18 @@ int main(int argc, char const *argv[])
         fclose(fp);
         return 0;
     }
+    lexeme *prog = program();
     if(argv[2] && !strcmp(argv[2], "-pp")){
-        while(!feof(fp)){
-            lexeme *prog = program();
-            pp(prog);
-        }
-        fclose(fp);
+        pp(prog);
+        
         return 0;
     }
-    lexeme *prog = program();
+    
     lexeme *env = newEnv();
-    printLexeme(eval(prog, env), stdout);
+    prog = eval(prog, env);
+    //printf("success\n");
+    ///displayAllEnv(env);
+    printLexeme(prog, stdout);
+    fclose(fp);
     return 0;
 }
