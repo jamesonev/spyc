@@ -1,12 +1,19 @@
-func pow(x, n){
-    if(n){
-        x * pow(x, n-1)
-    }
+a = 4
+if(a < 3){
+    a = a + 1
 }
 
 
 /*this is a sample function for my programming language spyc
 working cases:
+
+func pow(x, n){
+    if(n > 0){
+        x * pow(x, n - 1)
+    }
+}
+b = pow(2, 2)
+
 #1
 8.952 + 32 * 2
 2.1 + 1.952 + 4.2
@@ -70,5 +77,6 @@ while(a < 7){
     a = a + 1
 }
 */
+
 
 

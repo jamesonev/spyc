@@ -45,8 +45,11 @@ lexeme* evalAdd(lexeme* tree, lexeme* env){
 }
 
 lexeme* evalMultiply(lexeme* tree, lexeme* env){
+    printf("eval.evalMultiply\n");
     lexeme* lhs = eval(tree->car, env);
+    printLexeme(lhs, stdout);
     lexeme* rhs = eval(tree->cdr, env);
+    printLexeme(lhs, stdout);
     if(lhs->type == INTEGER && rhs->type == INTEGER)
         return newLexeme(INTEGER, lhs->intVal * rhs->intVal, NULL, 0);
     if(lhs->type == REAL && rhs->type == REAL)
@@ -90,6 +93,34 @@ lexeme* evalLessThan(lexeme* tree, lexeme* env){
     return NULL;
 }
 
+lexeme* evalGreaterThan(lexeme* tree, lexeme* env){
+    printf("evalGreaterThan\n");
+    lexeme* lhs = eval(tree->car, env);
+    //printf("lhs\n");
+   // printLexeme(lhs, stdout);
+    lexeme* rhs = eval(tree->cdr, env);
+    //printf("rhs\n");
+    //printLexeme(rhs, stdout);
+    if( (lhs->type == INTEGER || lhs->type == REAL) && 
+        (rhs->type == INTEGER || rhs->type == REAL) ){
+        double l = lhs->intVal + lhs->realNumVal;
+        double r = rhs->intVal + rhs->realNumVal;
+        if(l < r)   return cons(FALSELEX, NULL, NULL);
+        else        return cons(TRUELEX, NULL, NULL);
+    }
+    /*if(lhs->type == STRING && rhs->type == STRING){
+
+        if( !strcmp(lhs->stringVal, rhs->stringVal) )
+            return cons(TRUELEX, NULL, NULL);
+        else
+            return cons(FALSELEX, NULL, NULL);
+    }*/
+    printf("called GREATER_THAN with illegal args: \n");
+    printLexeme(lhs, stdout);
+    printLexeme(rhs, stdout);
+    exit(-3);
+    return NULL;
+}
 
 lexeme* evalExprToBool(lexeme* tree, lexeme* env){
     lexeme* expr = eval(tree, env);
@@ -97,12 +128,20 @@ lexeme* evalExprToBool(lexeme* tree, lexeme* env){
     printLexeme(expr, stdout);
     if(expr->type == TRUELEX || expr->type == FALSELEX)
         return expr;
-    if( expr->type == INTEGER && expr->intVal != 0)
+    if( expr->type == INTEGER && (expr->intVal != 0) )
         return cons(TRUELEX, NULL, NULL);
     if( expr->type == REAL &&
         (expr->realNumVal < .00001 && expr->realNumVal > -.00001) )
         return cons(TRUELEX, NULL, NULL);
     return cons(FALSELEX, NULL, NULL);
+}
+
+int isTrue(lexeme* tree, lexeme* env){
+    switch(tree->type){
+        case INTEGER:   return tree->intVal;
+        case REAL:      return (int) tree->realNumVal;
+        default:        return 0;
+    }
 }
 
 lexeme* evalStruct(lexeme* tree, lexeme* env){
@@ -119,6 +158,7 @@ lexeme* evalFuncCall(lexeme* tree, lexeme* env){
     //displayLocalEnv(defenv);
     lexeme* evalargs = eval(args, env); //evalargs must be left leaning
     lexeme* newenv = extend(defenv, params, evalargs);
+    insert(newenv, car(tree), clos);
     displayLocalEnv(newenv);
     return eval(body, newenv);
 }
@@ -220,10 +260,14 @@ lexeme* eval(lexeme* tree, lexeme* env){
             }
             return l;
         case IF:
-            if( evalExprToBool(tree->car, env)->type == TRUELEX)
+            if(eval(car(tree), env))
                 return eval(car(cdr(tree)), env);
             else
                 return eval(cdr(cdr(tree)), env);
+            /*if( evalExprToBool(tree->car, env)->type == TRUELEX)
+                return eval(car(cdr(tree)), env);
+            else
+                return eval(cdr(cdr(tree)), env);*/
         case ELSE:
             if(tree->car)   
                 return eval(tree->car, env);
@@ -232,6 +276,8 @@ lexeme* eval(lexeme* tree, lexeme* env){
 //comparisons
         case LESS_THAN:
             return evalLessThan(tree, env);
+        case GREATER_THAN:
+            return evalGreaterThan(tree, env);
         case TRUELEX:
             return tree;
         default:

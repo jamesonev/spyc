@@ -15,7 +15,8 @@ lexeme *newEnv(){
     return cons(ENV, NULL, cons(ENV, NULL, NULL));
 }
 lexeme *init(lexeme* env){
-    //TODO: seed top level env with builtin functions
+    insert(env, newLexeme(ID, 0, "a", 0), newLexeme(INTEGER, 4, NULL, 0) );
+    displayLocalEnv(env);
     return env;
 }
 
@@ -34,6 +35,7 @@ lexeme *insert(lexeme *env, lexeme *k, lexeme *v){
     env->car = v;
     return v;
 }
+
 lexeme *lookup(lexeme *env, lexeme *k){
     lexeme *key;
     lexeme *value;

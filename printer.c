@@ -6,6 +6,7 @@ for CS403, spring 2019
 #include "lexeme.h"
 
 void pp(lexeme* tree){
+    if(!tree) return;
     /*printf("\n**************************\n");
     printType(tree->type, stdout);
     if(tree->car){
