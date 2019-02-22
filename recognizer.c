@@ -226,6 +226,7 @@ lexeme* functionDef(){
     i = match(ID);
     match(OPAREN);
     o = optExpressionList();
+    o->type = OPTPARAMLIST;
     match(CPAREN);
     b = block();
     return cons(FUNCDEF, i, cons(GLUE, o, b));

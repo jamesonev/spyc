@@ -15,15 +15,22 @@ while(a){
     a = 0
 }
 
+a = 2
+b = 3
+c = 4
+x = a + b + c
+
 struct foo{
     a = 2,
     b = 2
 }
 */
 
+
 a = 2
+b = 3
 c = 4
-func foo(x){
-    x = 7
+func foo(w, x, y, z ){
+    x = 7 + w + y + z
 }
-a = foo(a)
+a = foo(a, b, c, c)

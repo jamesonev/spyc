@@ -139,6 +139,12 @@ void pp(lexeme* tree){
                 pp(tree->car);      //call exprlist
             }
             break;
+        case OPTPARAMLIST:
+            pp(tree);
+            if(tree->car){
+                pp(tree->car);      //call exprlist
+            }
+            break;
         case FUNCCALL:
             pp(tree->car);  //calls id
             printf("(");

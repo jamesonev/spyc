@@ -44,6 +44,8 @@ lexeme *insert(lexeme *env, lexeme *k, lexeme *v){
     return v;
 }
 lexeme *lookup(lexeme *env, lexeme *k){
+    printf("env.lookup\n");
+    printLexeme(k, stdout);
     lexeme *key;
     lexeme *value;
     while(env){
@@ -88,6 +90,7 @@ void displayLocalEnv(lexeme *env){
     lexeme *v = car(cdr(env));  //first v in table
     while(k){
         printLexeme(k, stdout);
+        fprintf(stdout, "\t");
         printLexeme(v, stdout);
         k = car(k);
         v = car(v);
