@@ -115,6 +115,8 @@ void printType(enum lexTypes type, FILE *fp){
         "GREATER_THAN",
         "LESS_THAN",
         "EQUALS",
+        "TRUELEX",
+        "FALSELEX",
     };
     fprintf(fp, "%s ", printLexTypes[type]);
 }

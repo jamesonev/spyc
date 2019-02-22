@@ -67,6 +67,8 @@ enum lexTypes   //ALSO UPDATE PRINTLEXEME() IN LEXEME.C
     GREATER_THAN,
     LESS_THAN,
     EQUALS,
+    TRUELEX,
+    FALSELEX,
 }type;
 
 typedef struct lexeme

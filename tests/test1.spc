@@ -1,3 +1,10 @@
+func pow(x, n){
+    if(n){
+        x * pow(x, n-1)
+    }
+}
+
+
 /*this is a sample function for my programming language spyc
 working cases:
 #1
@@ -24,8 +31,20 @@ struct foo{
     a = 2,
     b = 2
 }
-*/
 
+a = 4
+while(a){
+    a = 0
+}
+
+a = 4
+if(a < 1){
+    a = 7
+}
+else {
+    a = -2
+}
+b = a
 
 a = 2
 b = 3
@@ -34,3 +53,22 @@ func foo(w, x, y, z ){
     x = 7 + w + y + z
 }
 a = foo(a, b, c, c)
+
+
+func square(a){
+    x = a * a
+}
+
+z = square(200.5)
+
+
+a = 5
+while(a < 6){
+    a = a + 1
+}
+while(a < 7){
+    a = a + 1
+}
+*/
+
+
