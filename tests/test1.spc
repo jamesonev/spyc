@@ -1,11 +1,16 @@
-a = 4
-if(a < 3){
-    a = a + 1
+v = lambda(a, b, c){
+    b = 2
 }
-
 
 /*this is a sample function for my programming language spyc
 working cases:
+
+a = 4
+b = 3
+func pow(x, y){
+    x * y
+}
+z = pow(a, b)
 
 func pow(x, n){
     if(n > 0){

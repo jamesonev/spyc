@@ -50,6 +50,16 @@ lexeme* match(enum lexTypes type){
     //printLexeme(item, stdout);
     return item;
 }
+lexeme* lambda(){
+    lexeme* o;
+    lexeme* b;
+    match(LAMBDA);
+    match(OPAREN);
+    o = optExpressionList();
+    match(CPAREN);
+    b = block();
+    return cons(LAMBDA, NULL, cons(GLUE, o, b));
+}
 
 int varExpressionPending(){
     return check(ID);
@@ -75,7 +85,7 @@ lexeme* varExpression(){
 
 int unaryPending(){
     return check(REAL) || check(INTEGER) || check(STRING) ||
-            check(OBJDEF) || varExpressionPending();
+            check(OBJDEF) || check(LAMBDA) || varExpressionPending();
 }
 lexeme* unary(){
     lexeme* item = NULL;
@@ -83,6 +93,7 @@ lexeme* unary(){
     else if (check(INTEGER))             item = match(INTEGER);
     else if (check(STRING))              item = match(STRING);
     else if (check(OBJDEF))              item = match(OBJDEF);
+    else if (check(LAMBDA))              item = lambda();
     else if (varExpressionPending())     item = varExpression();
     else {
         printf("found: ");

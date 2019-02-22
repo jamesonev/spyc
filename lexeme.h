@@ -15,6 +15,7 @@ enum lexTypes   //ALSO UPDATE PRINTLEXEME() IN LEXEME.C
     VARIABLE,
     ID,
     STRING,
+    LAMBDA,
     //OPERATORS
     OPERATOR,
     ASSIGN,

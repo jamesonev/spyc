@@ -63,6 +63,7 @@ void printType(enum lexTypes type, FILE *fp){
         "VARIABLE",
         "ID",
         "STRING",   //remove?
+        "LAMBDA",
         //OPERATORS
         "OPERATOR",
         "ASSIGN",
