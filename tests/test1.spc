@@ -1,11 +1,20 @@
+func foo(x){
+    lambda(y){
+        x + y
+    }
+}
+a = foo(3)
+b = a(5)
+
+/*this is a sample function for my programming language spyc
+working cases:
+
 v = lambda(x){
     x = 2 * x
 }
 a = 17
 b = v(a)
 
-/*this is a sample function for my programming language spyc
-working cases:
 func lam(x){
     x = 2
 }
