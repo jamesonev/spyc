@@ -163,6 +163,25 @@ lexeme* evalFuncCall(lexeme* tree, lexeme* env){
     return eval(body, newenv);
 }
 
+lexeme* evalPrint(lexeme* tree){
+    tree = car(tree);
+    printf("evalPrint\n");
+    while(tree){
+        switch(tree->car->type){
+            case INTEGER:
+                printf("%d ", tree->car->intVal);
+                break;
+            default:
+                printf("unhandled statement in print: \n");
+                printLexeme(tree, stdout);
+                exit(-3);
+        }
+        tree = tree->cdr;
+    }
+    printf("\n");
+    return tree;
+}
+
 lexeme* evalOptParamList(lexeme* tree, lexeme* env){
     (void)env;  
     lexeme* expl;
@@ -253,7 +272,10 @@ lexeme* eval(lexeme* tree, lexeme* env){
         case CLOSURE:       return tree;
         case GLUE:          return tree;
         case OBJDEF:        return evalStruct(tree, env);
+        
+//keywords
         case RETURN:        return tree;
+        case PRINT:         return evalPrint(tree);
 //conditionals
         case WHILE:
             while( evalExprToBool(tree->car, env)->type == TRUELEX){

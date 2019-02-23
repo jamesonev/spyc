@@ -1,7 +1,8 @@
-a = (2 * 3) + 8
+print 5, 4, 0
 
 /*this is a sample function for my programming language spyc
 working cases:
+a = (2 * 3) + 8
 
 a = 4
 if(a < 3){

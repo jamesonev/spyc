@@ -43,6 +43,8 @@ enum lexTypes   //ALSO UPDATE PRINTLEXEME() IN LEXEME.C
     FUNCDEF,
     OBJDEF,
     ARRAY,
+    PRINT,
+    GET,
     EXPRESSION,
     EXPRLIST,
     OPTEXPRLIST,

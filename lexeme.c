@@ -91,6 +91,8 @@ void printType(enum lexTypes type, FILE *fp){
         "FUNCDEF",
         "OBJDEF",
         "ARRAY",
+        "PRINT",
+        "GET",
         "EXPRESSION",
         "EXPRLIST",
         "OPTEXPRLIST",

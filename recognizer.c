@@ -265,9 +265,11 @@ lexeme* defList(){
     return cons(DEFLIST, d, l);
 }
 
-int returnPending(){
-    return check(RETURN);
+lexeme* printStatement(){
+    match(PRINT);
+    return cons(PRINT, expressionList(), NULL);
 }
+
 lexeme* returnStatement(){
     lexeme* e = NULL;
     match(RETURN);
@@ -277,14 +279,15 @@ lexeme* returnStatement(){
 
 int statementPending(){
     return expressionPending() || ifPending() || whilePending() ||
-            defPending() || returnPending();
+            defPending() || check(RETURN) || check(PRINT);
 }
 lexeme* statement(){
     lexeme* item = NULL;
     if      (defPending())              item = defList();
     else if (ifPending())               item = ifStatement();
     else if (whilePending())            item = whileStatement();
-    else if (returnPending())           item = returnStatement();
+    else if (check(RETURN))             item = returnStatement();
+    else if (check(PRINT))              item = printStatement();
     else if (expressionPending())       item = expression();
     else{
         printf("found: ");
