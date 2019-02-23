@@ -1,7 +1,7 @@
 v = lambda(a, b, c){
-    b = 2
+    a + b + c
 }
-
+a = v(1,2,3)
 /*this is a sample function for my programming language spyc
 working cases:
 

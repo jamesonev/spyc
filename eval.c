@@ -176,24 +176,11 @@ lexeme* evalOptParamList(lexeme* tree, lexeme* env){
         tree = car(tree);
     }
     return returner;
+}
 
-
-
-
-
-
-
-
-    /*tree = tree->car;   //gets to exprlist
-    if(!tree) return NULL;
-    lexeme* pcar = car(tree);
-    lexeme* pcdr = cdr(tree);               
-    while(pcdr){
-        pcar->car = pcdr->car;
-        pcar = pcar->car;
-        pcdr = pcdr->car;
-    }
-    return tree->car;*/
+lexeme* evalLambda(lexeme* lex, lexeme* env){
+    lexeme * clos = eval(c)
+    
 }
 
 
@@ -216,6 +203,7 @@ lexeme* eval(lexeme* tree, lexeme* env){
         case REAL:          return tree;
         case STRING:        return tree;
         case ID:            return lookup(env, tree);
+        case LAMBDA         return evalLambda(env, tree);
 //operators
         case PLUS:          return evalAdd(tree, env);
         case MINUS:         return evalMinus(tree, env);
