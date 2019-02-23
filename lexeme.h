@@ -13,6 +13,7 @@ enum lexTypes   //ALSO UPDATE PRINTLEXEME() IN LEXEME.C
     REAL,
     INTEGER,
     VARIABLE,
+    PARENEXP,
     ID,
     STRING,
     //OPERATORS

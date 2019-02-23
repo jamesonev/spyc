@@ -61,6 +61,7 @@ void printType(enum lexTypes type, FILE *fp){
         "REAL",
         "INTEGER",
         "VARIABLE",
+        "PARENEXP",
         "ID",
         "STRING",   //remove?
         //OPERATORS

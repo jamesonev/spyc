@@ -73,9 +73,16 @@ lexeme* varExpression(){
     return i;
 }
 
+lexeme* parenExp(){
+    lexeme* e;
+    match(OPAREN);
+    e = expression();
+    match(CPAREN);
+    return cons(PARENEXP, e, NULL);
+}
 int unaryPending(){
     return check(REAL) || check(INTEGER) || check(STRING) ||
-            check(OBJDEF) || varExpressionPending();
+            check(OBJDEF) || check(OPAREN) || varExpressionPending();
 }
 lexeme* unary(){
     lexeme* item = NULL;
@@ -83,6 +90,7 @@ lexeme* unary(){
     else if (check(INTEGER))             item = match(INTEGER);
     else if (check(STRING))              item = match(STRING);
     else if (check(OBJDEF))              item = match(OBJDEF);
+    else if (check(OPAREN))              item = parenExp();
     else if (varExpressionPending())     item = varExpression();
     else {
         printf("found: ");

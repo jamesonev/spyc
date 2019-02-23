@@ -215,6 +215,7 @@ lexeme* eval(lexeme* tree, lexeme* env){
         case INTEGER:       return tree;
         case REAL:          return tree;
         case STRING:        return tree;
+        case PARENEXP:      return eval(tree->car, env);
         case ID:            return lookup(env, tree);
 //operators
         case PLUS:          return evalAdd(tree, env);

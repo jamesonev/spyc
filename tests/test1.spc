@@ -1,11 +1,12 @@
+a = (2 * 3) + 8
+
+/*this is a sample function for my programming language spyc
+working cases:
+
 a = 4
 if(a < 3){
     a = a + 1
 }
-
-
-/*this is a sample function for my programming language spyc
-working cases:
 
 func pow(x, n){
     if(n > 0){
