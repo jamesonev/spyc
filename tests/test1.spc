@@ -1,4 +1,5 @@
-print 5, 4, 0
+a = "bam"
+print "wham", a
 
 /*this is a sample function for my programming language spyc
 working cases:

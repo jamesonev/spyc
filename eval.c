@@ -171,6 +171,15 @@ lexeme* evalPrint(lexeme* tree){
             case INTEGER:
                 printf("%d ", tree->car->intVal);
                 break;
+            case REAL:
+                printf("%f ", tree->car->realNumVal);
+                break;
+            case ID:
+                printf("%s ", tree->car->stringVal);
+                break;
+            case STRING:
+                printf("%s ", tree->car->stringVal);
+                break;
             default:
                 printf("unhandled statement in print: \n");
                 printLexeme(tree, stdout);
