@@ -1,9 +1,15 @@
-v = lambda(a, b, c){
-    a + b + c
+v = lambda(x){
+    x = 2 * x
 }
-a = v(1,2,3)
+a = 17
+b = v(a)
+
 /*this is a sample function for my programming language spyc
 working cases:
+func lam(x){
+    x = 2
+}
+a = lam(1)
 
 a = 4
 b = 3

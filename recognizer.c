@@ -53,12 +53,14 @@ lexeme* match(enum lexTypes type){
 lexeme* lambda(){
     lexeme* o;
     lexeme* b;
+    lexeme* i = newLexeme(ID,0, "anon", 0);
     match(LAMBDA);
     match(OPAREN);
     o = optExpressionList();
-    match(CPAREN);
+    o->type = OPTPARAMLIST;
+    match(CPAREN); 
     b = block();
-    return cons(LAMBDA, NULL, cons(GLUE, o, b));
+    return cons(FUNCDEF, i, cons(GLUE, o, b));
 }
 
 int varExpressionPending(){
@@ -242,6 +244,18 @@ lexeme* functionDef(){
     b = block();
     return cons(FUNCDEF, i, cons(GLUE, o, b));
 }
+/*
+lexeme* lambda(){
+    lexeme* o;
+    lexeme* b;
+    match(LAMBDA);
+    match(OPAREN);
+    o = optExpressionList();
+    o->type = OPTPARAMLIST;
+    match(CPAREN); 
+    b = block();
+    return cons(LAMBDA, NULL, cons(GLUE, o, b));
+}*/
 int defPending(){
     return functionDefPending() || objectDefPending();
 }
