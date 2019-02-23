@@ -163,7 +163,8 @@ lexeme* evalFuncCall(lexeme* tree, lexeme* env){
     return eval(body, newenv);
 }
 
-lexeme* evalPrint(lexeme* tree){
+lexeme* evalPrint(lexeme* tree, lexeme* env){
+    lexeme* l;
     tree = car(tree);
     printf("evalPrint\n");
     while(tree){
@@ -175,7 +176,13 @@ lexeme* evalPrint(lexeme* tree){
                 printf("%f ", tree->car->realNumVal);
                 break;
             case ID:
-                printf("%s ", tree->car->stringVal);
+                l = lookup(env, tree->car);
+                if(l->type == INTEGER)
+                    printf("%d ", l->intVal);
+                if(l->type == REAL)
+                    printf("%f ", l->realNumVal);
+                if(l->type == STRING)
+                    printf("%s ", l->stringVal);
                 break;
             case STRING:
                 printf("%s ", tree->car->stringVal);
@@ -284,7 +291,7 @@ lexeme* eval(lexeme* tree, lexeme* env){
         
 //keywords
         case RETURN:        return tree;
-        case PRINT:         return evalPrint(tree);
+        case PRINT:         return evalPrint(tree, env);
 //conditionals
         case WHILE:
             while( evalExprToBool(tree->car, env)->type == TRUELEX){
