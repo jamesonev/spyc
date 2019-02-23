@@ -163,6 +163,12 @@ lexeme* evalFuncCall(lexeme* tree, lexeme* env){
     return eval(body, newenv);
 }
 
+lexeme* evalGet(lexeme* tree, lexeme* env){
+    //FILE *fp = stdin;
+    //fgetc()
+    return tree;
+}
+
 lexeme* evalPrint(lexeme* tree, lexeme* env){
     lexeme* l;
     tree = car(tree);
@@ -292,6 +298,7 @@ lexeme* eval(lexeme* tree, lexeme* env){
 //keywords
         case RETURN:        return tree;
         case PRINT:         return evalPrint(tree, env);
+        case GET:           return evalGet(tree, env);
 //conditionals
         case WHILE:
             while( evalExprToBool(tree->car, env)->type == TRUELEX){
