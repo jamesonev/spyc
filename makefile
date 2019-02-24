@@ -88,5 +88,12 @@ conditionals:
 conditionalsx:
 	./dpl tests/cond.spc
 
+recursion:
+	@cat tests/recur.spc
+
+recursionx:
+	@echo NOT IMPLEMENTED--MERGE CONDITIONAL BRANCH
+	./dpl tests/recur.spc
+
 clean:
 	rm -f *.o dpl 
