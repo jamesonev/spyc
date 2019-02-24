@@ -151,8 +151,6 @@ lexeme* evalEquals(lexeme* tree, lexeme* env){
 }
 lexeme* evalExprToBool(lexeme* tree, lexeme* env){
     lexeme* expr = eval(tree, env);
-    printf("evalExprToBool\n");
-    printLexeme(expr, stdout);
     if(expr->type == TRUELEX || expr->type == FALSELEX)
         return expr;
     if( expr->type == INTEGER && (expr->intVal != 0) )
@@ -165,8 +163,6 @@ lexeme* evalExprToBool(lexeme* tree, lexeme* env){
 }
 
 int isTrue(lexeme* tree, lexeme* env){
-    printf("eval.isTrue\n");
-    printLexeme(tree, stdout);
     switch(tree->type){
         case INTEGER:   return tree->intVal;
         case REAL:      return (int) tree->realNumVal;

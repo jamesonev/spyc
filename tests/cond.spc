@@ -5,4 +5,5 @@ if(a > 9){
 if(a < 10){
     b = 100
 }
-print "b = ", b
+
+print "b=", b
