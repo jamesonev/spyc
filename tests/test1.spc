@@ -1,5 +1,11 @@
-a = "bam"
-print "wham", a, 3 
+a = 4
+if(a < 1){
+    a = 7
+}
+else {
+    a = -2
+}
+print a 
 
 /*this is a sample function for my programming language spyc
 working cases:
