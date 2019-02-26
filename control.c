@@ -35,6 +35,14 @@ int main(int argc, char const *argv[])
     }
     
     lexeme *env = newEnv();
+    //seed environment
+    int i = 0;
+    char name[6];
+    while(argv[i]){
+        sprintf(&name[0], "argv%d", i);
+        insert(env, newLexeme(ID,0,name,0), newLexeme(STRING,0,argv[i],0) );
+        i++;
+    }
     prog = eval(prog, env);
     //printf("success\n");
     ///displayAllEnv(env);

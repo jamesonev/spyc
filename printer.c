@@ -32,6 +32,11 @@ void pp(lexeme* tree){
         case ID:
             printf("%s ", tree->stringVal);
             break;
+        case PARENEXP:
+            printf("(");
+            pp(tree->car);
+            printf(")\n");
+            break;
         case OBJDEF:
             printf("struct\n");
             pp(tree->car);  //calls id

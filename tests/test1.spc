@@ -5,9 +5,23 @@ func foo(x){
 }
 a = foo(3)
 b = a(5)
+a = 4
+if(a < 1){
+    a = 7
+}
+else {
+    a = -2
+}
+print a 
 
 /*this is a sample function for my programming language spyc
 working cases:
+a = (2 * 3) + 8
+
+a = 4
+if(a < 3){
+    a = a + 1
+}
 
 v = lambda(x){
     x = 2 * x

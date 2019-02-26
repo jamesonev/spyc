@@ -61,6 +61,7 @@ void printType(enum lexTypes type, FILE *fp){
         "REAL",
         "INTEGER",
         "VARIABLE",
+        "PARENEXP",
         "ID",
         "STRING",   //remove?
         "LAMBDA",
@@ -91,6 +92,8 @@ void printType(enum lexTypes type, FILE *fp){
         "FUNCDEF",
         "OBJDEF",
         "ARRAY",
+        "PRINT",
+        "GET",
         "EXPRESSION",
         "EXPRLIST",
         "OPTEXPRLIST",

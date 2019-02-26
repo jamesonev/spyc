@@ -3,7 +3,7 @@ LOPTS = -Wall -Wextra -g -std=c99
 
 .PHONY: run test1 t1p test2 test3 test4 test5
 
-all: pp
+all: dpl
 
 control.o: control.c lexer.h
 	gcc $(OOPTS) control.c
@@ -32,26 +32,68 @@ printer.o: printer.c printer.h
 recognizer.o: recognizer.c recognizer.h
 	gcc $(OOPTS) recognizer.c
 
-pp: control.o lexeme.o lexer.o printer.o digit.o recognizer.o env.o eval.o custString.o
-	gcc $(LOPTS) control.o lexeme.o lexer.o printer.o digit.o recognizer.o env.o eval.o custString.o -o pp
+dpl: control.o lexeme.o lexer.o printer.o digit.o recognizer.o env.o eval.o custString.o
+	gcc $(LOPTS) control.o lexeme.o lexer.o printer.o digit.o recognizer.o env.o eval.o custString.o -o dpl
 
 run:
-	./pp tests/test1.spc 
-	./pp tests/test2.spc
-	./pp tests/test3.spc
+	./dpl tests/test1.spc 
+	./dpl tests/test2.spc
+	./dpl tests/test3.spc
 
 test1:
-	./pp tests/test1.spc
+	./dpl tests/test1.spc
 
 t1p:
-	./pp tests/test1.spc -pp
+	./dpl tests/test1.spc -pp
 
 test2:
-	./pp tests/test2.spc
+	./dpl tests/test2.spc
 
 test3:
-	./pp tests/test3.spc
+	./dpl tests/test3.spc
 
+error1:
+	@cat tests/e1.spc
+
+error1x:
+	./dpl tests/e1.spc
+
+error2:
+	@cat tests/e2.spc
+
+error2x:
+	./dpl tests/e2.spc
+
+error3:
+	@cat tests/e3.spc
+
+error3x:
+	./dpl tests/e3.spc
+
+error4:
+	@cat tests/e4.spc
+
+error4x:
+	./dpl tests/e4.spc
+
+error5:
+	@cat tests/e5.spc
+
+error5x:
+	./dpl tests/e5.spc
+
+conditionals:
+	@cat tests/cond.spc
+
+conditionalsx:
+	./dpl tests/cond.spc
+
+recursion:
+	@cat tests/recur.spc
+
+recursionx:
+	@echo NOT IMPLEMENTED--MERGE CONDITIONAL BRANCH
+	./dpl tests/recur.spc
 
 clean:
-	rm -f *.o pp 
+	rm -f *.o dpl 

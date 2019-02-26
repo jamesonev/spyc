@@ -122,16 +122,42 @@ lexeme* evalGreaterThan(lexeme* tree, lexeme* env){
     return NULL;
 }
 
+lexeme* evalEquals(lexeme* tree, lexeme* env){
+    lexeme* lhs = eval(tree->car, env);
+    //printf("lhs\n");
+   // printLexeme(lhs, stdout);
+    lexeme* rhs = eval(tree->cdr, env);
+    //printf("rhs\n");
+    //printLexeme(rhs, stdout);
+    if( (lhs->type == INTEGER || lhs->type == REAL) && 
+        (rhs->type == INTEGER || rhs->type == REAL) ){
+        double l = lhs->intVal + lhs->realNumVal;
+        double r = rhs->intVal + rhs->realNumVal;
+        if(l == r)   return cons(TRUELEX, NULL, NULL);
+        else        return cons(FALSELEX, NULL, NULL);
+    }
+    /*if(lhs->type == STRING && rhs->type == STRING){
+
+        if( !strcmp(lhs->stringVal, rhs->stringVal) )
+            return cons(TRUELEX, NULL, NULL);
+        else
+            return cons(FALSELEX, NULL, NULL);
+    }*/
+    printf("called EQUALS with illegal args: \n");
+    printLexeme(lhs, stdout);
+    printLexeme(rhs, stdout);
+    exit(-3);
+    return NULL;
+}
 lexeme* evalExprToBool(lexeme* tree, lexeme* env){
     lexeme* expr = eval(tree, env);
-    printf("evalExprToBool\n");
-    printLexeme(expr, stdout);
     if(expr->type == TRUELEX || expr->type == FALSELEX)
         return expr;
     if( expr->type == INTEGER && (expr->intVal != 0) )
         return cons(TRUELEX, NULL, NULL);
     if( expr->type == REAL &&
-        (expr->realNumVal < .00001 && expr->realNumVal > -.00001) )
+        (expr->realNumVal < .00001 &&
+        expr->realNumVal > -.00001) )
         return cons(TRUELEX, NULL, NULL);
     return cons(FALSELEX, NULL, NULL);
 }
@@ -140,6 +166,8 @@ int isTrue(lexeme* tree, lexeme* env){
     switch(tree->type){
         case INTEGER:   return tree->intVal;
         case REAL:      return (int) tree->realNumVal;
+        case TRUELEX:   return 1;
+        case FALSELEX:  return 0;
         default:        return 0;
     }
 }
@@ -165,6 +193,46 @@ lexeme* evalFuncCall(lexeme* tree, lexeme* env){
     return eval(body, newenv);
 }
 
+lexeme* evalGet(lexeme* tree, lexeme* env){
+    //FILE *fp = stdin;
+    //fgetc()
+    return tree;
+}
+
+lexeme* evalPrint(lexeme* tree, lexeme* env){
+    lexeme* l;
+    tree = car(tree);
+    while(tree){
+        switch(tree->car->type){
+            case INTEGER:
+                printf("%d ", tree->car->intVal);
+                break;
+            case REAL:
+                printf("%f ", tree->car->realNumVal);
+                break;
+            case ID:
+                l = lookup(env, tree->car);
+                if(l->type == INTEGER)
+                    printf("%d ", l->intVal);
+                if(l->type == REAL)
+                    printf("%f ", l->realNumVal);
+                if(l->type == STRING)
+                    printf("%s ", l->stringVal);
+                break;
+            case STRING:
+                printf("%s ", tree->car->stringVal);
+                break;
+            default:
+                printf("unhandled statement in print: \n");
+                printLexeme(tree, stdout);
+                exit(-3);
+        }
+        tree = tree->cdr;
+    }
+    printf("\n");
+    return tree;
+}
+
 lexeme* evalOptParamList(lexeme* tree, lexeme* env){
     (void)env;  
     lexeme* expl;
@@ -182,6 +250,7 @@ lexeme* evalOptParamList(lexeme* tree, lexeme* env){
 
 lexeme* evalLambda(lexeme* tree, lexeme* env){
     return cons(CLOSURE, env, tree);
+
 }
 
 
@@ -203,6 +272,7 @@ lexeme* eval(lexeme* tree, lexeme* env){
         case INTEGER:       return tree;
         case REAL:          return tree;
         case STRING:        return tree;
+        case PARENEXP:      return eval(tree->car, env);
         case ID:            return lookup(env, tree);
         case LAMBDA:        return evalLambda(env, tree);
 //operators
@@ -241,7 +311,11 @@ lexeme* eval(lexeme* tree, lexeme* env){
         case CLOSURE:       return tree;
         case GLUE:          return tree;
         case OBJDEF:        return evalStruct(tree, env);
+        
+//keywords
         case RETURN:        return tree;
+        case PRINT:         return evalPrint(tree, env);
+        case GET:           return evalGet(tree, env);
 //conditionals
         case WHILE:
             while( evalExprToBool(tree->car, env)->type == TRUELEX){
@@ -249,7 +323,7 @@ lexeme* eval(lexeme* tree, lexeme* env){
             }
             return l;
         case IF:
-            if(eval(car(tree), env))
+            if( isTrue(eval(car(tree), env), env))
                 return eval(car(cdr(tree)), env);
             else
                 return eval(cdr(cdr(tree)), env);
@@ -267,6 +341,8 @@ lexeme* eval(lexeme* tree, lexeme* env){
             return evalLessThan(tree, env);
         case GREATER_THAN:
             return evalGreaterThan(tree, env);
+        case EQUALS:
+            return evalEquals(tree, env);
         case TRUELEX:
             return tree;
         default:

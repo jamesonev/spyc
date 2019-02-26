@@ -85,9 +85,18 @@ lexeme* varExpression(){
     return i;
 }
 
+lexeme* parenExp(){
+    lexeme* e;
+    match(OPAREN);
+    e = expression();
+    match(CPAREN);
+    return cons(PARENEXP, e, NULL);
+}
 int unaryPending(){
     return check(REAL) || check(INTEGER) || check(STRING) ||
-            check(OBJDEF) || check(LAMBDA) || varExpressionPending();
+            check(OBJDEF) || check(LAMBDA) || check(OPAREN) ||
+            varExpressionPending();
+            check(OBJDEF)  || varExpressionPending();
 }
 lexeme* unary(){
     lexeme* item = NULL;
@@ -96,6 +105,7 @@ lexeme* unary(){
     else if (check(STRING))              item = match(STRING);
     else if (check(OBJDEF))              item = match(OBJDEF);
     else if (check(LAMBDA))              item = lambda();
+    else if (check(OPAREN))              item = parenExp();
     else if (varExpressionPending())     item = varExpression();
     else {
         printf("found: ");
@@ -282,9 +292,11 @@ lexeme* defList(){
     return cons(DEFLIST, d, l);
 }
 
-int returnPending(){
-    return check(RETURN);
+lexeme* printStatement(){
+    match(PRINT);
+    return cons(PRINT, expressionList(), NULL);
 }
+
 lexeme* returnStatement(){
     lexeme* e = NULL;
     match(RETURN);
@@ -294,14 +306,15 @@ lexeme* returnStatement(){
 
 int statementPending(){
     return expressionPending() || ifPending() || whilePending() ||
-            defPending() || returnPending();
+            defPending() || check(RETURN) || check(PRINT);
 }
 lexeme* statement(){
     lexeme* item = NULL;
     if      (defPending())              item = defList();
     else if (ifPending())               item = ifStatement();
     else if (whilePending())            item = whileStatement();
-    else if (returnPending())           item = returnStatement();
+    else if (check(RETURN))             item = returnStatement();
+    else if (check(PRINT))              item = printStatement();
     else if (expressionPending())       item = expression();
     else{
         printf("found: ");
