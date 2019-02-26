@@ -64,6 +64,7 @@ void printType(enum lexTypes type, FILE *fp){
         "PARENEXP",
         "ID",
         "STRING",   //remove?
+        "LAMBDA",
         //OPERATORS
         "OPERATOR",
         "ASSIGN",

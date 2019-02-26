@@ -177,9 +177,11 @@ lexeme* evalStruct(lexeme* tree, lexeme* env){
 }
 
 lexeme* evalFuncCall(lexeme* tree, lexeme* env){
+    printf("evalFuncCall\n");
     lexeme* clos = eval(car(tree), env );   //looks up func def
     lexeme* args = cdr(tree);               //evaluates optexprlist of args
     lexeme* params = eval(car(cdr(cdr(clos))), env);
+    printf("params\n");
     lexeme* body = cdr(cdr(cdr(clos)));
     //printLexeme(body, stdout);
     lexeme* defenv = car(clos);
@@ -246,6 +248,11 @@ lexeme* evalOptParamList(lexeme* tree, lexeme* env){
     return returner;
 }
 
+lexeme* evalLambda(lexeme* tree, lexeme* env){
+    return cons(CLOSURE, env, tree);
+
+}
+
 
 lexeme* eval(lexeme* tree, lexeme* env){
     if(!tree)   return tree;
@@ -267,6 +274,7 @@ lexeme* eval(lexeme* tree, lexeme* env){
         case STRING:        return tree;
         case PARENEXP:      return eval(tree->car, env);
         case ID:            return lookup(env, tree);
+        case LAMBDA:        return evalLambda(env, tree);
 //operators
         case PLUS:          return evalAdd(tree, env);
         case MINUS:         return evalMinus(tree, env);

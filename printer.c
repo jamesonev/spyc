@@ -44,9 +44,14 @@ void pp(lexeme* tree){
             pp(tree->cdr);  //calls expressionList
             printf("}\n");
             break;
+        case LAMBDA:
+            printf("lambda (");
+            pp(car(cdr(tree)));
+            printf(")");
+            pp(cdr(cdr(tree)));
+            break;
 //operators
         case ASSIGN:
-            printf("in pp.ASSIGN\n");
             pp(tree->car);
             printf("= ");
             pp(tree->cdr);

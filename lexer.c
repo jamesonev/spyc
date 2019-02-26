@@ -145,6 +145,7 @@ lexeme *lex(){
         else if (!strcmp(word, "get"))      item = newLexeme(GET, 0, NULL, 0);        
         else if (!strcmp(word, "func"))     item = newLexeme(FUNCTION, 0, NULL, 0);
         else if (!strcmp(word, "obj"))      item = newLexeme(OBJDEF, 0, NULL, 0);
+        else if (!strcmp(word, "lambda"))   item = newLexeme(LAMBDA, 0, NULL, 0);
         else                                item = newLexeme(ID, 0, word, 0);
         resetString(&buffer);
     }

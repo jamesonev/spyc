@@ -50,6 +50,18 @@ lexeme* match(enum lexTypes type){
     //printLexeme(item, stdout);
     return item;
 }
+lexeme* lambda(){
+    lexeme* o;
+    lexeme* b;
+    lexeme* i = newLexeme(ID,0, "anon", 0);
+    match(LAMBDA);
+    match(OPAREN);
+    o = optExpressionList();
+    o->type = OPTPARAMLIST;
+    match(CPAREN); 
+    b = block();
+    return cons(FUNCDEF, i, cons(GLUE, o, b));
+}
 
 int varExpressionPending(){
     return check(ID);
@@ -82,7 +94,9 @@ lexeme* parenExp(){
 }
 int unaryPending(){
     return check(REAL) || check(INTEGER) || check(STRING) ||
-            check(OBJDEF) || check(OPAREN) || varExpressionPending();
+            check(OBJDEF) || check(LAMBDA) || check(OPAREN) ||
+            varExpressionPending();
+            check(OBJDEF)  || varExpressionPending();
 }
 lexeme* unary(){
     lexeme* item = NULL;
@@ -90,6 +104,7 @@ lexeme* unary(){
     else if (check(INTEGER))             item = match(INTEGER);
     else if (check(STRING))              item = match(STRING);
     else if (check(OBJDEF))              item = match(OBJDEF);
+    else if (check(LAMBDA))              item = lambda();
     else if (check(OPAREN))              item = parenExp();
     else if (varExpressionPending())     item = varExpression();
     else {
@@ -239,6 +254,18 @@ lexeme* functionDef(){
     b = block();
     return cons(FUNCDEF, i, cons(GLUE, o, b));
 }
+/*
+lexeme* lambda(){
+    lexeme* o;
+    lexeme* b;
+    match(LAMBDA);
+    match(OPAREN);
+    o = optExpressionList();
+    o->type = OPTPARAMLIST;
+    match(CPAREN); 
+    b = block();
+    return cons(LAMBDA, NULL, cons(GLUE, o, b));
+}*/
 int defPending(){
     return functionDefPending() || objectDefPending();
 }

@@ -1,3 +1,10 @@
+func foo(x){
+    lambda(y){
+        x + y
+    }
+}
+a = foo(3)
+b = a(5)
 a = 4
 if(a < 1){
     a = 7
@@ -15,6 +22,24 @@ a = 4
 if(a < 3){
     a = a + 1
 }
+
+v = lambda(x){
+    x = 2 * x
+}
+a = 17
+b = v(a)
+
+func lam(x){
+    x = 2
+}
+a = lam(1)
+
+a = 4
+b = 3
+func pow(x, y){
+    x * y
+}
+z = pow(a, b)
 
 func pow(x, n){
     if(n > 0){
